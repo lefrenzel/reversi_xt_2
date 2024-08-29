@@ -1,8 +1,3 @@
-# To define multi line strings or messages use escape characters to define the layout.
-# Start each line with '\"' and end each line with '\"'.
-# Example: text="Hello, world!\n\"
-# "\tThis text is indented\"
-
 help_text=You have the following options:\n\t"-h" or "--help" to display this help menu.\n\t"-i" or "--ip" to change the ip address of the server.\n\t\tStandard ip: 127.0.0.1\n\t"-p" or "--port" to change the port of the server.\n\t\tStandard port: 7777\n
 standard_ip=127.0.0.1
 standard_port=7777
