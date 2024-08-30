@@ -30,12 +30,12 @@ class Main {
 };
 
 /// @brief Parses the config file and stores the read variables in a map
-/// @return returns 1 if an error occured while reading the file
-int parseConfigFile() {
+void parseConfigFile() {
     std::ifstream configFile(CONFIG_PATH);
     if(!configFile.is_open()) {
-        std::cerr << "Unable to open config file at " << CONFIG_PATH << " ." << std::endl;
-        return 1;
+        std::string errorMessage = "Unable to open config file at " + CONFIG_PATH + ".";
+        throw errorMessage;
+        return;
     }
 
     std::string line;
@@ -52,6 +52,7 @@ int parseConfigFile() {
             continue;
         }
 
+        //skip lines without '='
         size_t equalsPos = line.find('=');
         if(equalsPos == std::string::npos) {
             continue;
@@ -69,21 +70,24 @@ int parseConfigFile() {
         equalsPos = 0;
         while ((equalsPos = currentValue.find("\\t", equalsPos)) != std::string::npos) {
             currentValue.replace(equalsPos, 2, "\t");
-            equalsPos++;
+            equalsPos++;    
         }
 
         CONFIG[currentKey] = currentValue;
     }
     configFile.close();
-    return 0;
+    return;
 }
 
 int main(int argc, char* argv[]) {
-    int errCode = 0;
-    errCode = parseConfigFile();
-    if(errCode != 0) {
-        return 1;
+    try {
+        parseConfigFile();
+    } catch (const char* errorMessage) {
+        std::cerr << errorMessage << std::endl;
+    } catch (...) {
+        std::cerr << "Error while reading config file." << std::endl;
     }
+    
     Main client(argc, argv);
     
     return 0;
