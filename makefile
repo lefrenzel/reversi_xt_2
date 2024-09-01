@@ -1,28 +1,29 @@
-TMP_FOLDER = ./object_files
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL = client02
+OBJ_DIR = object_files
+CXX = g++
+CXXFLAGS = 
+CONST_PATH = ressources/constants
+object_files = $(OBJ_DIR)/main.o $(OBJ_DIR)/constants.o
 
-all: start final 
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
-start:
-	mkdir -p $(TMP_FOLDER)
-
-final: main.o constants.o
+client02: $(OBJ_DIR) $(object_files)
 	@echo "Linking the client..."
-	g++ $(TMP_FOLDER)/main.o $(TMP_FOLDER)/constants.o -o client02
-	rm -rf $(TMP_FOLDER)
+	$(CXX) -o client02 $(object_files)
 
-main.o: main.cpp
+$(OBJ_DIR)/main.o: main.cpp $(CONST_PATH)/constants.h
 	@echo "Compiling main.cpp..."
-	g++ -c main.cpp -o $(TMP_FOLDER)/main.o
+	$(CXX) -c -o $(OBJ_DIR)/main.o main.cpp
 
-constants.o: ressources/constants/constants.cpp
+$(OBJ_DIR)/constants.o: $(CONST_PATH)/constants.cpp $(CONST_PATH)/constants.h
 	@echo "Compiling constants.cpp..."
-	g++ -c ressources/constants/constants.cpp -o $(TMP_FOLDER)/constants.o
+	$(CXX) -c -o $(OBJ_DIR)/constants.o $(CONST_PATH)/constants.cpp
 
-launch: all
+launch: client02
 	./client02 -h
 
 clean:
 	@echo "Removing everything but the source files..."
-	rm -rf $(TMP_FOLDER)
+	rm -rf $(OBJ_DIR)
 
