@@ -1,29 +1,33 @@
-.DEFAULT_GOAL = client02
-OBJ_DIR = object_files
-CXX = g++
-CXXFLAGS = 
-CONST_PATH = ressources/constants
-object_files = $(OBJ_DIR)/main.o $(OBJ_DIR)/constants.o
+.DEFAULT_GOAL := client02
+OBJDIR := object_files
+CXX := g++
+CXXFLAGS := -g
+CONST_PATH := ressources/constants
+OBJS := $(addprefix $(OBJDIR)/, main.o constants.o)
+VPATH := ressources/constants object_files
 
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
-client02: $(OBJ_DIR) $(object_files)
+client02: $(OBJS)
 	@echo "Linking the client..."
-	$(CXX) -o client02 $(object_files)
-
-$(OBJ_DIR)/main.o: main.cpp $(CONST_PATH)/constants.h
+	$(CXX) -o client02 $^
+	
+$(OBJDIR)/main.o: main.cpp constants.h
 	@echo "Compiling main.cpp..."
-	$(CXX) -c -o $(OBJ_DIR)/main.o main.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-$(OBJ_DIR)/constants.o: $(CONST_PATH)/constants.cpp $(CONST_PATH)/constants.h
+$(OBJDIR)/constants.o: constants.cpp constants.h
 	@echo "Compiling constants.cpp..."
-	$(CXX) -c -o $(OBJ_DIR)/constants.o $(CONST_PATH)/constants.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(OBJS): | $(OBJDIR)
+
+$(OBJDIR):
+	mkdir $(OBJDIR)
 
 launch: client02
-	./client02 -h
+	./client02 -i
 
+.PHONY: clean
 clean:
 	@echo "Removing everything but the source files..."
-	rm -rf $(OBJ_DIR)
+	rm -rf $(OBJDIR)
 
