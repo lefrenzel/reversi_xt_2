@@ -8,6 +8,7 @@ std::string STANDARD_IP;
 std::string STANDARD_PORT;
 std::string STANDARD_DEPTH;
 std::string STANDARD_TIME;
+std::string STANDARD_ALGORITHM;
 std::string CONFIG_PATH = "./ressources/config/client_globals.rc";
 
 /// @brief Parses the config file and stores variables as global variables.
@@ -68,6 +69,8 @@ void parseConfigFile() {
       STANDARD_TIME = currentValue;
     } else if (currentKey == "standard_depth") {
       STANDARD_DEPTH = currentValue;
+    } else if (currentKey == "standard_algorithm") {
+      STANDARD_ALGORITHM == currentValue;
     }
   }
   configFile.close();

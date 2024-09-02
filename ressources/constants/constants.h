@@ -8,6 +8,7 @@ extern std::string STANDARD_IP;
 extern std::string STANDARD_PORT;
 extern std::string STANDARD_DEPTH;
 extern std::string STANDARD_TIME;
+extern std::string STANDARD_ALGORITHM;
 
 void parseConfigFile();
 
