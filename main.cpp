@@ -7,23 +7,36 @@
 
 class Main {
 public:
-  Main(int argc, char *argv[]) {};
-  void setServerIp(std::string ip) {
-    // todo check for correct Ipv4 address
-    this->serverIp = ip;
-  }
+  Main() {
+    this->serverIp = STANDARD_IP;
+    this->serverPort = std::stoi(STANDARD_PORT);
+    this->algorithmChoice = std::stoi(STANDARD_ALGORITHM);
+    this->depthLimit = std::stoi(STANDARD_DEPTH);
+    this->timeLimit = std::stod(STANDARD_TIME);
+  };
+
+  void setServerIp(std::string ip) { this->serverIp = ip; }
   void setServerPort(std::string port) { this->serverPort = std::stoi(port); }
   void setAlgorithmChoice(std::string algorithmChoice) {
-    // todo check for correct algorithmChoice
-    this->algorithmChoice = std::stoi(algorithmChoice);
+    int algorithm = std::stoi(algorithmChoice);
+    if (algorithm < 0) {
+      throw("Invalid algorithm choice: " + algorithmChoice);
+    }
+    this->algorithmChoice = algorithm;
   }
   void setDepthLimit(std::string depthLimit) {
-    // todo check for correct depthLimit
-    this->depthLimit = std::stoi(depthLimit);
+    int depth = std::stoi(depthLimit);
+    if (depth < 0) {
+      throw("Invalid depth limit: " + depthLimit);
+    }
+    this->depthLimit = depth;
   }
   void setTimeLimit(std::string timeLimit) {
-    // todo check for correct timeLimit
-    this->timeLimit = std::stod(timeLimit);
+    int time = std::stoi(timeLimit);
+    if (time < 0) {
+      throw("Invalid time limit: " + timeLimit);
+    }
+    this->timeLimit = time;
   }
 
 private:
@@ -43,7 +56,7 @@ int main(int argc, char *argv[]) {
     std::cerr << "Error while reading config file." << std::endl;
   }
 
-  Main client(argc, argv);
+  Main client;
   try {
     if (argc == 1) {
       throw(0);
@@ -71,8 +84,8 @@ int main(int argc, char *argv[]) {
       }
     }
 
-  } catch (int exception) {
-    switch (exception) {
+  } catch (int invalid_cl_argument) {
+    switch (invalid_cl_argument) {
     case 1:
       std::cerr << "Invalid command line arguments\n";
       std::cout << HELP_TEXT << "\n";
@@ -81,9 +94,10 @@ int main(int argc, char *argv[]) {
     default:
       break;
     }
+  } catch (std::string invalid_argument_range) {
+    std::cerr << invalid_argument_range;
   } catch (std::invalid_argument) {
     std::cerr << "Invalid datatype for parameter setter\n";
   }
-
   return 0;
 }
