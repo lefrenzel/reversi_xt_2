@@ -70,7 +70,7 @@ void parseConfigFile() {
     } else if (currentKey == "standard_depth") {
       STANDARD_DEPTH = currentValue;
     } else if (currentKey == "standard_algorithm") {
-      STANDARD_ALGORITHM == currentValue;
+      STANDARD_ALGORITHM = currentValue;
     }
   }
   configFile.close();

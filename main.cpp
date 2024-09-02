@@ -60,19 +60,17 @@ int main(int argc, char *argv[]) {
   try {
     if (argc == 1) {
       throw(0);
-      return;
     }
 
     if ((argc % 2 == 0) && (argv[1] != "-h" || argv[1] != "--help")) {
       throw(1);
-      return;
     }
 
     for (int i = 0; i < argc; i++) {
       std::string args(argv[i]);
       if (args == "-h" || args == "--help") {
         std::cout << HELP_TEXT << std::endl;
-        return;
+        return 0;
       } else if (args == "-i" || args == "--ip") {
         client.setServerIp(argv[i + 1]);
       } else if (args == "-p" || args == "--port") {
