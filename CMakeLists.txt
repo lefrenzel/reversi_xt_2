@@ -1,7 +1,3 @@
-cmake_minimum_required(VERSION 3.6.0)
-project(reversi_xt_2 VERSION 0.1.0 LANGUAGES C CXX)
-
-add_executable(client main.cpp)
-
-include(CTest)
-enable_testing()
+cmake_minimum_required(VERSION 3.28.2)
+project(REVXT2)
+add_executable(client02 main.cpp)
