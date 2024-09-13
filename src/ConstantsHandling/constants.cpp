@@ -1,4 +1,4 @@
-#include "../include/constants.h"
+#include "constants.h"
 #include <fstream>
 #include <iostream>
 
