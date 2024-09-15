@@ -1,4 +1,5 @@
 #include "moveUtils.h"
+#include <iostream>
 
 /// @brief Returns the x-coordinate stored in a move
 /// @param move The move which contains the wanted x-coordinate
@@ -22,7 +23,10 @@ int getPlayerNumber(uint32_t move) { return move & 0xFF; }
 /// move/stone
 /// @todo add another function that returns the player number if this move is on
 /// a choice square
-int getSpecialInformation(uint32_t move) { return move >> 8 & 0xFF; }
+specialInfo getSpecialInformation(uint32_t move) {
+  int temp = move >> 8 & 0xFF;
+  return getSpecialInfoFrom(temp);
+}
 
 /// @brief Sets the x-coordinate in the given move
 /// @param move The move that will be modified
@@ -56,36 +60,21 @@ unsigned int setPlayerNumber(uint32_t move, int playerNumber) {
   return (move & mask) | info;
 }
 
-/// @brief
-/// @param move
-/// @param specialInformation
-/// @return
-/// @todo change function to enable the information reading from an enum
-/// datatype
-unsigned int setSpecialInformation(uint32_t move, int specialInformation) {
-  uint32_t info = specialInformation;
+/// @brief Sets the special information of a move
+/// @param move The move that will be modified
+/// @param specialInformation The information that needs to be set
+/// @return The move with set player number
+unsigned int setSpecialInfo(uint32_t move, specialInfo specialInfo) {
+  uint32_t info = specialInfo;
   uint32_t mask = 0xFFFF00FF;
   return (move & mask) | info;
 }
 
-/// @brief
-/// @param move
-/// @param playerNumber
-/// @return
-/// @todo setChoice and setBonus may be irrelevant or need to be adjusted
-/// according to changes to set/getSpecialInformation function
-unsigned int setChoice(uint32_t move, int playerNumber) {
-  uint32_t info = playerNumber;
-  uint32_t mask = 0xFFFF00FF;
-  return (move & mask) | info;
-}
-unsigned int setBonus(uint32_t move, bool bomb) {
-  uint32_t info = 0;
-  if (bomb) {
-    info = 20;
+specialInfo getSpecialInfoFrom(int temp) {
+  auto it = specialInfoLookup.find(temp);
+  if (it != specialInfoLookup.end()) {
+    return it->second;
   } else {
-    info = 21;
+    throw std::invalid_argument("Invalid special information bits.");
   }
-  uint32_t mask = 0xFFFF00FF;
-  return (move & mask) | info;
 }
