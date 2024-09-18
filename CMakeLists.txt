@@ -5,7 +5,7 @@ project(${PROJECT_NAME})
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/out/build)
 
 add_executable(${PROJECT_NAME} main.cpp)
-
+include_directories(${PROJECT_SOURCE_DIR}/include)
 # List every subdirectory needed for the build-process here
 add_subdirectory(src)
 

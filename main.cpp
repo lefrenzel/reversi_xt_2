@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string>
 
-#include "./src/ConstantsHandling/constants.h"
+#include "constants.h"
 
 class Main {
 public:

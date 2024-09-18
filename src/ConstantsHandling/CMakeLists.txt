@@ -1,5 +1,5 @@
 target_sources(${PROJECT_NAME}
   PRIVATE
     constants.cpp
-    constants.h
+    ${PROJECT_SOURCE_DIR}/include/constants.h
 )

@@ -1,5 +1,5 @@
 target_sources(${PROJECT_NAME}
   PUBLIC
     moveUtils.cpp
-    moveUtils.h  
+    ${PROJECT_SOURCE_DIR}/include/moveUtils.h
 )

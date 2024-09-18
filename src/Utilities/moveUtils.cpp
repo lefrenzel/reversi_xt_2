@@ -19,10 +19,6 @@ int getPlayerNumber(uint32_t move) { return move & 0xFF; }
 /// @brief
 /// @param move
 /// @return
-/// @todo should return an enum datatype which contains the type of special
-/// move/stone
-/// @todo add another function that returns the player number if this move is on
-/// a choice square
 specialInfo getSpecialInformation(uint32_t move) {
   int temp = move >> 8 & 0xFF;
   return getSpecialInfoFrom(temp);
