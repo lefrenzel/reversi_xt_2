@@ -16,10 +16,11 @@ int getCoordinateY(uint32_t move) { return move >> 16 & 0xFF; }
 /// @return Player number of the player who plays the move
 int getPlayerNumber(uint32_t move) { return move & 0xFF; }
 
-/// @brief
-/// @param move
-/// @return
-specialInfo getSpecialInformation(uint32_t move) {
+/// @brief Returns the type of action associated with the square the move was
+/// played on
+/// @param move The move which constains the action/square-type
+/// @return Type of action associated with the square the move was played on
+specialInfo getSpecialInfo(uint32_t move) {
   int temp = move >> 8 & 0xFF;
   return getSpecialInfoFrom(temp);
 }
@@ -30,7 +31,7 @@ specialInfo getSpecialInformation(uint32_t move) {
 /// @return The move with the set x-coordinate
 unsigned int setCoordinateX(uint32_t move, int coordinateX) {
   uint32_t info = coordinateX;
-  uint32_t mask = 0xFFFFFF;
+  uint32_t mask = 0x00FFFFFF;
   info << 24;
   return (move & mask) | info;
 }
