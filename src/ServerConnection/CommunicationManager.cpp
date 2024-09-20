@@ -1,6 +1,7 @@
 #include <iostream>
 #include "CommunicationManager.hpp"
 #include <constants.h>
+#include <asio.hpp>
 
 CommunicationManager::CommunicationManager(std::string ip, std::string port) {
   serverIp = ip;
